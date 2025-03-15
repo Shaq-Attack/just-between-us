@@ -1,8 +1,8 @@
 :root {
-  --basePrimary: cyan;
-  --baseSecondary: yellow;
-  --textPrimary: black;
-  --textSecondary: blue;
+  --basePrimary: #FAF7F0;
+  --baseSecondary: #CDFCF6;
+  --textPrimary: #354259;
+  --textSecondary: #98A8F8;
 }
 
 html {
@@ -11,18 +11,27 @@ html {
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --basePrimary: magenta;
-    --baseSecondary: orange;
-    --textPrimary: white;
-    --textSecondary: darkGreen;
+    --basePrimary: #2a3548;
+    --baseSecondary: #98A8F8;
+    --textPrimary: #FAF7F0;
+    --textSecondary: #81a39e;
   }
 }
 
 [data-theme="dark"] {
-  --basePrimary: magenta;
-    --baseSecondary: orange;
-    --textPrimary: white;
-    --textSecondary: darkGreen;
+  color-scheme: dark;
+  --basePrimary: #2a3548;
+  --baseSecondary: #98A8F8;
+  --textPrimary: #FAF7F0;
+  --textSecondary: #81a39e;
+}
+
+[data-theme="light"] {
+  color-scheme: light;
+  --basePrimary: #FAF7F0;
+  --baseSecondary: #CDFCF6;
+  --textPrimary: #354259;
+  --textSecondary: #98A8F8;
 }
 
 body {
@@ -32,15 +41,56 @@ body {
 }
 
 .TextTitle {
+  font-family: 'Bradley Hand',
+    cursive,
+    sans-serif;
   font-weight: bold;
-  color: green;
+  font-size: 1rem;
+  margin: 0;
+  color: var(--textPrimary);
 }
 
-.Home {
+.Switch {
+  --kendo-color-surface: var(--basePrimary);
+  --kendo-color-primary: var(--textSecondary);
+  --kendo-color-on-app-surface: var(--textPrimary);
+}
+
+.NavButtons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.WebPage {
   padding-top: 5rem;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
+}
+
+.Wrapper {
+  height: calc((100vh / 3) - 1.66rem);
+  width: 75%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.Banner {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 0.5rem solid var(--textSecondary);
+  border-radius: 1rem;
+  color: var(--textSecondary);
+  font-family: 'Bradley Hand',
+    cursive,
+    sans-serif;
+  font-size: 8rem;
 }

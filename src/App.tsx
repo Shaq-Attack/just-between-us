@@ -7,6 +7,7 @@ import Read from './pages/read';
 import { AppBar, AppBarSection, AppBarSpacer } from '@progress/kendo-react-layout';
 import { Switch } from '@progress/kendo-react-inputs';
 import { Button } from '@progress/kendo-react-buttons';
+import { GetThemeColour } from './utils';
 
 const getInitialTheme = () => {
     return window.matchMedia('(prefers-color-scheme: light)').matches;
@@ -31,16 +32,12 @@ function App() {
         };
     }, []);
 
-    const getThemeColour = (): 'light' | 'dark' => {
-        return isLightMode ? 'light' : 'dark';
-    };
-
     const renderPage = (page: string) => {
         switch (page) {
             case 'home':
                 return <HomePage />;
             case 'write':
-                return <Write />;
+                return <Write isLightMode={isLightMode} />;
             case 'read':
                 return <Read />;
             default:
@@ -50,20 +47,20 @@ function App() {
 
     return (
         <div>
-            <AppBar themeColor={getThemeColour()} positionMode="fixed">
+            <AppBar themeColor={GetThemeColour(isLightMode)} positionMode="fixed">
                 <AppBarSection>
                     <p className="TextTitle">Just Between Us</p>
                 </AppBarSection>
                 <AppBarSpacer />
                 <AppBarSection>
                     <span className="NavButtons">
-                        <Button themeColor={getThemeColour()} onClick={() => setPageToRender('home')}>
+                        <Button themeColor={GetThemeColour(isLightMode)} onClick={() => setPageToRender('home')}>
                             Home
                         </Button>
-                        <Button themeColor={getThemeColour()} onClick={() => setPageToRender('write')}>
+                        <Button themeColor={GetThemeColour(isLightMode)} onClick={() => setPageToRender('write')}>
                             Write
                         </Button>
-                        <Button themeColor={getThemeColour()} onClick={() => setPageToRender('read')}>
+                        <Button themeColor={GetThemeColour(isLightMode)} onClick={() => setPageToRender('read')}>
                             Read
                         </Button>
                     </span>

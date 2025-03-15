@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@progress/kendo-react-buttons": "^10.0.0",
+    "@progress/kendo-react-common": "^10.0.0",
     "@progress/kendo-react-inputs": "^10.0.0",
     "@progress/kendo-react-layout": "^10.0.0",
     "@progress/kendo-theme-default": "^10.3.1",

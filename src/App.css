@@ -1,8 +1,8 @@
 :root {
   --basePrimary: #FAF7F0;
-  --baseSecondary: #CDFCF6;
+  --baseSecondary: #74BEC1;
   --textPrimary: #354259;
-  --textSecondary: #98A8F8;
+  --textSecondary: #333333;
 }
 
 html {
@@ -12,32 +12,37 @@ html {
 @media (prefers-color-scheme: dark) {
   :root {
     --basePrimary: #2a3548;
-    --baseSecondary: #98A8F8;
+    --baseSecondary: #333333;
     --textPrimary: #FAF7F0;
-    --textSecondary: #81a39e;
+    --textSecondary: #74BEC1;
   }
 }
 
 [data-theme="dark"] {
   color-scheme: dark;
   --basePrimary: #2a3548;
-  --baseSecondary: #98A8F8;
+  --baseSecondary: #333333;
   --textPrimary: #FAF7F0;
-  --textSecondary: #81a39e;
+  --textSecondary: #74BEC1;
 }
 
 [data-theme="light"] {
   color-scheme: light;
   --basePrimary: #FAF7F0;
-  --baseSecondary: #CDFCF6;
+  --baseSecondary: #74BEC1;
   --textPrimary: #354259;
-  --textSecondary: #98A8F8;
+  --textSecondary: #333333;
 }
 
 body {
   background-color: var(--basePrimary);
   color: var(--textPrimary);
   font-family: Arial, sans-serif;
+}
+
+.Text {
+  background-color: var(--basePrimary);
+  color: var(--textPrimary);
 }
 
 .TextTitle {
@@ -80,6 +85,21 @@ body {
   justify-content: center;
 }
 
+.Buttons {
+  width: 42%;
+  display: flex;
+  flex-direction: row;
+  align-items: left;
+  justify-content: left;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.TextInput {
+  --kendo-color-surface-alt: var(--baseSecondary);
+  --kendo-color-on-app-surface: var(--textPrimary);
+}
+
 .Banner {
   height: 100%;
   width: 100%;
@@ -93,4 +113,13 @@ body {
     cursive,
     sans-serif;
   font-size: 8rem;
+}
+
+.Loader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100vw;
 }

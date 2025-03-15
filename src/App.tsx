@@ -1,27 +1,24 @@
 import './App.css';
+import { useEffect, useState } from 'react';
 import '@progress/kendo-theme-default/dist/all.css';
-import { Home } from './pages/home';
+import HomePage from './pages/home';
+import Write from './pages/write';
+import Read from './pages/read';
 import { AppBar, AppBarSection, AppBarSpacer } from '@progress/kendo-react-layout';
 import { Switch } from '@progress/kendo-react-inputs';
-import { useEffect, useState } from 'react';
+import { Button } from '@progress/kendo-react-buttons';
+
+const getInitialTheme = () => {
+    return window.matchMedia('(prefers-color-scheme: light)').matches;
+};
 
 function App() {
-    const [isLightMode, setIsLightMode] = useState(true);
-
-    const getInitialTheme = () => {
-        return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-    };
-
-    const [theme, setTheme] = useState(getInitialTheme());
-
-    const handleThemeChange = () => {
-        setTheme((prevTheme) => (prevTheme === 'light' ? 'dark' : 'light'));
-    };
+    const [isLightMode, setIsLightMode] = useState<boolean>(getInitialTheme());
+    const [pageToRender, setPageToRender] = useState<string>('home');
 
     useEffect(() => {
-        document.documentElement.setAttribute('data-theme', theme);
-        setIsLightMode(theme === 'light');
-    }, [theme]);
+        document.documentElement.setAttribute('data-theme', isLightMode ? 'light' : 'dark');
+    }, [isLightMode]);
 
     useEffect(() => {
         const setThemeChange = () => {
@@ -34,24 +31,55 @@ function App() {
         };
     }, []);
 
+    const getThemeColour = (): 'light' | 'dark' => {
+        return isLightMode ? 'light' : 'dark';
+    };
+
+    const renderPage = (page: string) => {
+        switch (page) {
+            case 'home':
+                return <HomePage />;
+            case 'write':
+                return <Write />;
+            case 'read':
+                return <Read />;
+            default:
+                return <HomePage />;
+        }
+    };
+
     return (
         <div>
-            <AppBar themeColor={isLightMode ? 'light' : 'dark'} positionMode="fixed">
+            <AppBar themeColor={getThemeColour()} positionMode="fixed">
                 <AppBarSection>
                     <p className="TextTitle">Just Between Us</p>
                 </AppBarSection>
                 <AppBarSpacer />
                 <AppBarSection>
-                    <span>Text1</span>
-                    <span>Text2</span>
-                    <span>Text3</span>
+                    <span className="NavButtons">
+                        <Button themeColor={getThemeColour()} onClick={() => setPageToRender('home')}>
+                            Home
+                        </Button>
+                        <Button themeColor={getThemeColour()} onClick={() => setPageToRender('write')}>
+                            Write
+                        </Button>
+                        <Button themeColor={getThemeColour()} onClick={() => setPageToRender('read')}>
+                            Read
+                        </Button>
+                    </span>
                 </AppBarSection>
                 <AppBarSpacer />
                 <AppBarSection>
-                    <Switch onChange={handleThemeChange} />
+                    <Switch
+                        offLabel=""
+                        onLabel=""
+                        checked={!isLightMode}
+                        className="Switch"
+                        onChange={() => setIsLightMode(!isLightMode)}
+                    />
                 </AppBarSection>
             </AppBar>
-            <Home />
+            {renderPage(pageToRender)}
         </div>
     );
 }

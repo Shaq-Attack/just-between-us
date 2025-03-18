@@ -21,9 +21,13 @@ const Read = (props: { isLightMode: boolean; db: Firestore }): ReactElement => {
     useEffect(() => {
         setLoading(true);
         ReadAll(db)
-            .then((result) => setData(result))
+            .then((result) => setData(randomise(result)))
             .finally(() => setLoading(false));
     }, [db]);
+
+    const randomise = (array: Message[]): Message[] => {
+        return array.sort(() => Math.random() - 0.5);
+    };
 
     const toggleWindow = () => {
         setVisibleWindow(!visibleWindow);

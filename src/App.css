@@ -1,6 +1,6 @@
 :root {
-  --basePrimary: #FAF7F0;
-  --baseSecondary: #74BEC1;
+  --basePrimary: #74BEC1;
+  --baseSecondary: #FAF7F0;
   --textPrimary: #354259;
   --textSecondary: #333333;
 }
@@ -28,8 +28,8 @@ html {
 
 [data-theme="light"] {
   color-scheme: light;
-  --basePrimary: #FAF7F0;
-  --baseSecondary: #74BEC1;
+  --basePrimary: #74BEC1;
+  --baseSecondary: #FAF7F0;
   --textPrimary: #354259;
   --textSecondary: #333333;
 }
@@ -120,6 +120,30 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100vh;
+  height: calc((100vh / 3) - 1.66rem);
   width: 100vw;
+}
+
+.Grid-layout-wrapper {
+  width: 70%;
+  box-shadow: 0rem 1rem 2rem #00000029;
+  border-radius: 2rem;
+  margin-bottom: 3rem;
+}
+.Grid-layout-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
+}
+
+.Grid-layout-content {
+  height: 100%;
+  width: 100%;
+  overflow: auto;
+}
+
+.Card {
+  --kendo-color-surface-alt: var(--baseSecondary);
+  --kendo-color-on-app-surface: var(--textPrimary);
 }

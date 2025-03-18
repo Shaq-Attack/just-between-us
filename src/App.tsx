@@ -8,6 +8,8 @@ import { AppBar, AppBarSection, AppBarSpacer } from '@progress/kendo-react-layou
 import { Switch } from '@progress/kendo-react-inputs';
 import { Button } from '@progress/kendo-react-buttons';
 import { GetThemeColour } from './utils';
+import { initializeApp } from 'firebase/app';
+import { getFirestore } from 'firebase/firestore';
 
 const getInitialTheme = () => {
     return window.matchMedia('(prefers-color-scheme: light)').matches;
@@ -16,6 +18,21 @@ const getInitialTheme = () => {
 function App() {
     const [isLightMode, setIsLightMode] = useState<boolean>(getInitialTheme());
     const [pageToRender, setPageToRender] = useState<string>('home');
+
+    const firebaseConfig = {
+        apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+        authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+        projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+        storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
+        messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
+        appId: process.env.REACT_APP_FIREBASE_APP_ID,
+        measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID,
+    };
+    console.log(firebaseConfig);
+    console.log(process.env);
+    const fireApp = initializeApp(firebaseConfig);
+
+    const db = getFirestore(fireApp);
 
     useEffect(() => {
         document.documentElement.setAttribute('data-theme', isLightMode ? 'light' : 'dark');
@@ -37,9 +54,9 @@ function App() {
             case 'home':
                 return <HomePage />;
             case 'write':
-                return <Write isLightMode={isLightMode} />;
+                return <Write db={db} isLightMode={isLightMode} />;
             case 'read':
-                return <Read />;
+                return <Read db={db} isLightMode={isLightMode} />;
             default:
                 return <HomePage />;
         }

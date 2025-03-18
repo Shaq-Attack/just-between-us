@@ -13,15 +13,14 @@ const Home = (): ReactElement => {
             </div>
             <div className="Wrapper">
                 <Typography.p>
-                    Welcome to this cozy corner of the internet where secrets are shared, laughter is loud, and every
-                    message is a mystery waiting to spark intrigue.
+                    Welcome to <strong>JustBetweenUs</strong> where secrets are shared, laughter is loud, and every
+                    message is a mystery waiting to meet the world.
                 </Typography.p>
                 <div style={{ textAlign: 'left' }}>
                     <ul>
                         <li>
-                            <strong>Speak Your Mind, Anonymously:</strong> Let your thoughts flow without a trace. Your
-                            messages are yours alone, giving you the freedom to share, vent, or inspire without the fear
-                            of judgment.
+                            <strong>Speak Your Mind, Anonymously:</strong> Let your thoughts flow without a trace.
+                            Giving you the freedom to share, vent, or inspire without the fear of judgment.
                         </li>
                         <li>
                             <strong>Connect Through Secrets:</strong> Whether you're dropping a note, confessing a

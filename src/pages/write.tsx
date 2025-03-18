@@ -111,7 +111,7 @@ const Write = (props: { isLightMode: boolean; db: Firestore }): ReactElement => 
                         />
                         <TextArea
                             className="TextInput"
-                            rows={31}
+                            rows={25}
                             resizable="none"
                             style={{ width: '48rem' }}
                             placeholder="Write your message here..."

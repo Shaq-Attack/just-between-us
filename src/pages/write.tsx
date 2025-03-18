@@ -4,17 +4,41 @@ import { TextBox, TextArea } from '@progress/kendo-react-inputs';
 import { Button } from '@progress/kendo-react-buttons';
 import { Dialog, DialogActionsBar } from '@progress/kendo-react-dialogs';
 import { Loader } from '@progress/kendo-react-indicators';
-import { GetStoryCategory, GetThemeColour, GetThemeColourV2 } from '../utils';
+import { Notification, NotificationGroup } from '@progress/kendo-react-notification';
+import { Fade } from '@progress/kendo-react-animation';
+import { GetStoryCategory, GetThemeColour, GetThemeColourV2, InitializeMessage } from '../utils';
+import { Firestore } from 'firebase/firestore';
+import { Create } from '../RecordKeeper';
 
-const Write = (props: { isLightMode: boolean }): ReactElement => {
-    const { isLightMode } = props;
+interface State {
+    success: boolean;
+    error: boolean;
+}
+
+const Write = (props: { isLightMode: boolean; db: Firestore }): ReactElement => {
+    const { isLightMode, db } = props;
     const [title, setTitle] = useState<string>('');
     const [story, setStory] = useState<string>('');
     const [wordCount, setWordCount] = useState<number>(0);
     const [storyCategory, setStoryCategory] = useState<number>(0);
     const [visibleErrorDialog, setVisibleErrorDialog] = useState<boolean>(false);
-    const [visibleSuccessDialog, setVisibleSuccessDialog] = useState<boolean>(false);
+    const [state, setState] = useState<State>({ success: false, error: false });
     const [loading, setLoading] = useState<boolean>(false);
+
+    const onToggle = (flag: keyof State) => {
+        setState({ ...state, [flag]: !state[flag] });
+        if (flag === 'success') {
+            setTimeout(() => {
+                setState({ ...state, [flag]: false });
+            }, 3000);
+        }
+        if (flag === 'error') {
+            setTimeout(() => {
+                setState({ ...state, [flag]: false });
+            }, 5000);
+        }
+    };
+    const { success, error } = state;
 
     useEffect(() => {
         const wordCount = story.split(' ').filter((word) => word.length > 0).length;
@@ -36,10 +60,20 @@ const Write = (props: { isLightMode: boolean }): ReactElement => {
         const canSubmit = storyCategory > 0 && title.length > 0;
         if (canSubmit) {
             setLoading(true);
-            setTimeout(() => {
-                setLoading(false);
-                setVisibleSuccessDialog(true);
-            }, 2000);
+            Create(db, InitializeMessage(title, story, storyCategory))
+                .catch((e) => {
+                    console.error(e);
+                    setLoading(false);
+                    onToggle('error');
+                })
+                .then(() => {
+                    setLoading(false);
+                    setTitle('');
+                    setStory('');
+                    setWordCount(0);
+                    setStoryCategory(0);
+                    onToggle('success');
+                });
         } else {
             setVisibleErrorDialog(true);
         }
@@ -47,7 +81,7 @@ const Write = (props: { isLightMode: boolean }): ReactElement => {
 
     return (
         <div className="WebPage">
-            {!visibleErrorDialog && !visibleSuccessDialog && !loading && (
+            {!visibleErrorDialog && !loading && (
                 <div>
                     <Typography.h3>Share Your Thoughts! </Typography.h3>
                     <Typography.p>
@@ -96,6 +130,37 @@ const Write = (props: { isLightMode: boolean }): ReactElement => {
                     <Typography.p>
                         <strong>Word Count:</strong> {wordCount} ({GetStoryCategory(storyCategory)})
                     </Typography.p>
+                    <NotificationGroup
+                        style={{
+                            right: 0,
+                            bottom: 0,
+                            alignItems: 'flex-start',
+                            flexWrap: 'wrap-reverse',
+                        }}
+                    >
+                        <Fade>
+                            {success && (
+                                <Notification
+                                    type={{ style: 'success', icon: true }}
+                                    closable={true}
+                                    onClose={() => setState({ ...state, success: false })}
+                                >
+                                    <span>Your message has been submitted!</span>
+                                </Notification>
+                            )}
+                        </Fade>
+                        <Fade>
+                            {error && (
+                                <Notification
+                                    type={{ style: 'error', icon: true }}
+                                    closable={true}
+                                    onClose={() => setState({ ...state, error: false })}
+                                >
+                                    <span>Something went wrong. Please try again.</span>
+                                </Notification>
+                            )}
+                        </Fade>
+                    </NotificationGroup>
                 </div>
             )}
             {visibleErrorDialog && (
@@ -113,24 +178,10 @@ const Write = (props: { isLightMode: boolean }): ReactElement => {
                     </DialogActionsBar>
                 </Dialog>
             )}
-            {visibleSuccessDialog && (
-                <Dialog
-                    themeColor={GetThemeColour(isLightMode)}
-                    title={'Success!'}
-                    onClose={() => setVisibleSuccessDialog(false)}
-                >
-                    <Typography.p>
-                        Your message has been submitted successfully! Thanks for sharing your thoughts with us.
-                    </Typography.p>
-                    <DialogActionsBar>
-                        <Button onClick={() => setVisibleSuccessDialog(false)}>Back</Button>
-                    </DialogActionsBar>
-                </Dialog>
-            )}
             {loading && (
                 <div className="Loader">
                     <Loader type="infinite-spinner" themeColor={GetThemeColourV2(isLightMode)} />
-                    <Typography.p>Submitting your message...</Typography.p>
+                    <Typography.p>Submitting your Post...</Typography.p>
                 </div>
             )}
         </div>

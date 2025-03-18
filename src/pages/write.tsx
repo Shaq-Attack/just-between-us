@@ -85,7 +85,7 @@ const Write = (props: { isLightMode: boolean; db: Firestore }): ReactElement => 
                 <div>
                     <Typography.h3>Share Your Thoughts! </Typography.h3>
                     <Typography.p>
-                        Drop in any message you like—whether it's a quirky thought, a secret smile, or a piece of
+                        Drop in any message you like—whether it's a quirky thought, your deepest secret, or a piece of
                         wisdom.
                     </Typography.p>
                     <Typography.p>

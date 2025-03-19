@@ -8,13 +8,15 @@ _Connecting thoughts, one message at a time._
 
 ## 🚀 Project Overview
 
-**JustBetweenUs** is a web application that enables users to share messages. Built with React and KendoReact Free components, it offers a seamless and interactive user experience.
+**JustBetweenUs** is a web application that enables users to share messages and engage through comments. Built with React and KendoReact Free components, it offers a seamless and interactive user experience.
 
 ---
 
 ## 🛠️ Features
 
 -   **Message Submission:** Users can effortlessly post their thoughts.
+
+-   **Interactive Message Board:** Browse and comment on messages shared by others.
 
 -   **Interactive Message Board:** Browse all messages shared by others.
 

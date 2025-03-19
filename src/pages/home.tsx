@@ -1,10 +1,12 @@
 import { ReactElement } from 'react';
 import { Typography } from '@progress/kendo-react-common';
 import JBULogo from '../logo';
+import { Analytics } from '@vercel/analytics/react';
 
 const Home = (): ReactElement => {
     return (
         <div className="WebPage">
+            <Analytics />
             <div className="Wrapper">
                 <JBULogo />
             </div>

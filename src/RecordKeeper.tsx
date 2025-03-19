@@ -1,4 +1,4 @@
-import { addDoc, getDocs, collection, Firestore, QuerySnapshot, query, where } from 'firebase/firestore';
+import { addDoc, getDocs, collection, Firestore, QuerySnapshot, query, where, updateDoc } from 'firebase/firestore';
 
 export type Message = {
     title: string;
@@ -37,4 +37,15 @@ export const ReadByTitle = async (db: Firestore, title: string): Promise<QuerySn
     const result = await getDocs(q);
 
     return result;
+};
+
+export const Update = async (db: Firestore, title: string, toUpdate: Message) => {
+    console.log('Updating: ', title, toUpdate);
+    const coll = collection(db, 'messages');
+    const q = query(coll, where('title', '==', title));
+    const result = await getDocs(q);
+
+    if (result.size === 1) {
+        await updateDoc(result.docs[0].ref, toUpdate);
+    }
 };
